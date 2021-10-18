@@ -1,0 +1,36 @@
+
+
+<div *ngIf="isLogin;else loginpage">
+           <!-- sidebar-->
+        <div class="nk-sidebar nk-sidebar-fixed" data-content="sidebarMenu">
+            <app-sidebar ></app-sidebar>
+        </div>
+  
+        <!-- wrap -->
+        <div class="nk-wrap">
+  
+            <!-- header-->
+            <div class="nk-header nk-header-fixed is-light">
+                <app-header></app-header>
+            </div>
+              
+            <!-- content-->
+            <div class="nk-content ">
+                <div class="container-fluid">
+                    <router-outlet></router-outlet>                     <!-- main router-outlet -->
+                </div>
+            </div>
+            
+            <!-- footer -->
+            <!-- <app-footer ></app-footer> -->
+  
+        </div>
+        <!-- wrap -->
+</div>
+ 
+<ng-template #loginpage>
+
+    <router-outlet></router-outlet>
+
+</ng-template>
+    

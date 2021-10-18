@@ -1,0 +1,151 @@
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Milk Type</h3>
+                    <div class="nk-block-des text-soft">
+                        <!-- <p>Welcome to Milk Rate.</p> -->
+                    </div>
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <div class="toggle-wrap nk-block-tools-toggle">
+                        <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                        <div class="toggle-expand-content" data-content="pageMenu">
+                            <ul class="nk-block-tools g-3">
+                                <li>
+                                    <div class="drodown">
+                                        <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-toggle="dropdown"><em class="d-none d-sm-inline icon ni ni-calender-date"></em><span><span class="d-none d-md-inline">Last</span> 30 Days</span><em class="dd-indc icon ni ni-chevron-right"></em></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <ul class="link-list-opt no-bdr">
+                                                <li><a href="#"><span>Last 30 Days</span></a></li>
+                                                <li><a href="#"><span>Last 6 Months</span></a></li>
+                                                <li><a href="#"><span>Last 1 Years</span></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nk-block-tools-opt"><a href="#" class="btn btn-primary"><em class="icon ni ni-reports"></em><span>Reports</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+        <div class="nk-block">
+            <div class="row g-gs">
+                
+            
+                <div class="col-md-6 col-lg-5 col-xxl-3">
+                    <div class="card card-bordered h-100">
+                        <div class="card-inner">
+                            <div class="card-title-group align-start pb-3 g-2">
+                                <div class="card-title card-title-sm">
+                                    <h6 class="title">Add Milk Type</h6>
+                                    <p>Add new milk type.</p>
+                                </div>
+                                <div class="card-tools">
+                                    <em class="card-hint icon ni ni-help" data-toggle="tooltip" data-placement="left" title="Performance of this month"></em>
+                                </div>
+                            </div>
+                            <div class="analytic-wp">
+                                <div class="analytic-wp-group g-3">
+                                    <div class="row gy-4">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="form-label" for="default-01">Milk Type</label>
+                                                <div class="form-control-wrap">
+                                                    <input type="text" class="form-control" id="default-01" placeholder="Milk Type">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="form-label" for="default-06">Status</label>
+                                                <div class="form-control-wrap ">
+                                                    <div class="form-control-select">
+                                                        <select class="form-control" id="default-06">
+                                                            <option value="">Select Status</option>
+                                                            <option value="active">Active</option>
+                                                            <option value="inactive">Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12" >
+                                            <div class="form-group float-right">
+                                                <button type="submit"  class="btn btn-sm btn-primary">Create milk type</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .card -->
+                </div><!-- .col -->
+
+
+                <div class="col-lg-7 col-xxl-6"  >
+
+                 
+
+                    <div class="card card-bordered h-100">
+                        <div class="card-inner mb-n2">
+                            <div class="card-title-group">
+                                <div class="card-title card-title-sm">
+                                    <h6 class="title">Milk Type</h6>
+                                    <p>List of milk types.</p>
+                                </div>
+                                <div class="card-tools">
+                                    <div class="drodown">
+                                        <a href="#" class="btn btn-sm btn-white" >Total Milk Type : {{count}}</a>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nk-tb-list is-loose traffic-channel-table">
+                            <div class="nk-tb-item nk-tb-head">
+                                <div class="nk-tb-col nk-tb-sessions"><span>#Id</span></div>
+                                <div class="nk-tb-col nk-tb-channel"><span>Milk Type</span></div>
+                                <div class="nk-tb-col nk-tb-prev-sessions"><span>Status</span></div>
+                                <div class="nk-tb-col nk-tb-change text-center"><span>Action</span></div>
+                            
+                            </div><!-- .nk-tb-head -->
+                           
+                            <div class="nk-tb-item" *ngFor="let record of records; let i=index;">
+                                <div class="nk-tb-col nk-tb-sessions">
+                                    <span class="tb-sub tb-amount"><span>{{i+1}}</span></span>
+                                </div>
+                                <div class="nk-tb-col nk-tb-channel">
+                                    <span class="tb-lead">{{record.milk | titlecase}}</span>
+                                </div>
+                               
+                                <div class="nk-tb-col nk-tb-prev-sessions">
+                                    <span class="badge badge-dim badge-success" *ngIf="record.is_status == 'active'"><span>Active</span></span>
+                                    <span class="badge badge-dim badge-danger" *ngIf="record.is_status == 'inactive'"><span>Inactive</span></span>
+
+                                </div>
+                                <div class="nk-tb-col nk-tb-change text-center">
+                                    <span class="tb-sub text-center">
+                                        <a href="javascript:;" class="btn btn-icon btn-sm btn-success mr-1" (click)="edit_milktype(record.id)"><em class="icon ni ni-edit"></em></a>
+                                        <a href="javascript:;" class="btn btn-icon btn-sm btn-danger" (click)="delete_milktype(record.id)"><em class="icon ni ni-trash"></em></a>
+                                    </span>
+                                </div>
+                            </div><!-- .nk-tb-item -->
+                        </div><!-- .nk-tb-list -->
+                        <div class="p-4" *ngIf="records.length==0">
+                            <div class="text-center">
+                                <span ><a href="#">{{recordnotfound}}</a></span>
+                            </div>
+                        </div>
+                    </div><!-- .card -->
+                </div><!-- .col -->
+
+                
+           
+            </div><!-- .row -->
+        </div><!-- .nk-block -->
+    </div>
+</div>

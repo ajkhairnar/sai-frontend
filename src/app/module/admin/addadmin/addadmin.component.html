@@ -1,0 +1,166 @@
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title"> {{ is_edit ? 'Edit' : 'Add' }} Admin</h3>
+                   
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <div class="toggle-wrap nk-block-tools-toggle">
+                        <a href="javascript:void(0);" class="btn btn-icon btn-trigger toggle-expand mr-n1" (click)="showmobile()"><em class="icon ni ni-menu-alt-r"></em></a>
+                        <div class="toggle-expand-content" [style.display]="mobileexport">
+                            <ul class="nk-block-tools g-3">
+                                <li><a routerLink="/admin/listadmin" class="btn btn-white btn-outline-light"><span>Admin List</span></a></li>
+                                
+                            </ul>
+                        </div>
+                    </div><!-- .toggle-wrap -->
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+
+        <!-- ----------------------- -->
+        
+        <div class="components-preview wide-md mx-auto">
+            
+          
+            <div class="nk-block nk-block-lg">
+                <!-- Message -->
+                <div *ngIf="message"  class="alert {{ status ? 'alert-success':'alert-danger' }} alert-icon alert-sm">
+                    <em class="icon ni {{ status ? 'ni-check-circle':'ni-cross-circle' }}"></em> <strong>{{ status ? 'Success.':'Error!' }}</strong> {{message}}
+                 </div>
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-head">
+                            
+                        </div>
+                        <form [formGroup]="adminform" (ngSubmit)="is_edit ? update_admin() : create_admin()">
+                            <div class="row g-4">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name-1">First Name</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" formControlName="first_name" placeholder="Enter first name">
+                                        </div>
+                                        <span class="error" *ngIf="first_name && first_name.invalid && first_name.touched">Enter first name</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name-1">Middle Name</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" formControlName="middle_name"  placeholder="Enter middle name">
+                                        </div>
+                                        <span class="error" *ngIf="middle_name && middle_name.invalid && middle_name.touched">Enter Middle name</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name-1">Last Name</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" formControlName="last_name" placeholder="Enter last name">
+                                        </div>
+                                        <span class="error" *ngIf="last_name && last_name.invalid && last_name.touched">Enter Last name</span>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name-1"> Mobile</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" formControlName="mobile" placeholder="Enter mobile number">
+                                        </div>
+                                        <div class="div" *ngIf="mobile && mobile.invalid && mobile.touched">
+                                            <span class="error" *ngIf="mobile.errors?.pattern">Enter 10 Mobile Number</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name-1">Email Address</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" formControlName="email" placeholder="Enter email address ">
+                                        </div>
+                                        <div class="div" *ngIf="email && email.invalid && email.touched">
+                                            <span class="error" *ngIf="email.errors?.email">Enter valid email address </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name-1">Username</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" formControlName="username"  placeholder="Enter username">
+                                        </div>
+                                        <div *ngIf="username && username.invalid && username.touched">
+                                            <span class="error" *ngIf="username && username.errors?.required">Username is required.</span>
+                                            <span class="error" *ngIf="username && username.errors?.minlength">Minimum length 5 required</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name-1">Password</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" formControlName="password" placeholder="Enter password">
+                                        </div>
+                                        <div *ngIf="password && password.invalid && password.touched">
+                                            <span class="error" *ngIf="password && password.errors?.required">Password is required.</span>
+                                            <span class="error" *ngIf="password && password.errors?.minlength">Minimum length 5 required</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="email-address-1">Status</label>
+                                        <div class="form-control-wrap">
+                                            <div class="form-control-select">
+                                                <select class="form-control" formControlName="is_status" >
+                                                    <option value="" selected disabled> Select status</option>
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <span class="error" *ngIf="is_status && is_status.invalid && is_status.touched">Select Role</span>
+
+
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12" *ngIf="!is_edit; else updatebtn">
+                                    <div class="form-group float-right">
+                                        <a routerLink="/admin/listadmin" class="btn btn-sm btn-light mr-2">Cancel</a>
+                                        <button type="submit" [disabled]="!adminform.valid" class="btn btn-sm btn-primary">Create Admin</button>
+                                    </div>
+                                </div>
+                                <ng-template #updatebtn>
+                                    <div class="col-12" >
+                                        <div class="form-group float-right">
+                                            <a routerLink="/admin/listadmin" class="btn btn-sm btn-light mr-2">Cancel</a>
+                                            <button type="submit" [disabled]="!adminform.valid" class="btn btn-sm btn-success">Update Admin</button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- .nk-block -->
+           
+        </div><!-- .components-preview -->
+
+
+
+
+
+
+        <!-- ----------------------------------- -->
+    </div>
+</div>

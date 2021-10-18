@@ -1,0 +1,97 @@
+
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">  {{ is_edit ? 'Edit' : 'Add' }} Area</h3>
+                   
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <div class="toggle-wrap nk-block-tools-toggle">
+                        <a href="javascript:void(0);" class="btn btn-icon btn-trigger toggle-expand mr-n1" (click)="showmobile()"><em class="icon ni ni-menu-alt-r"></em></a>
+                        <div class="toggle-expand-content" [style.display]="mobileexport">
+                            <ul class="nk-block-tools g-3">
+                                <li><a routerLink="/area/listarea" class="btn btn-white btn-outline-light"><span>Areas List</span></a></li>
+                                
+                            </ul>
+                        </div>
+                    </div><!-- .toggle-wrap -->
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+
+        <!-- ----------------------- -->
+        
+        <div class="components-preview wide-md mx-auto">
+            
+          
+            <div class="nk-block nk-block-lg">
+                <!-- Message -->
+                <div *ngIf="message"  class="alert {{ status ? 'alert-success':'alert-danger' }} alert-icon alert-sm">
+                    <em class="icon ni {{ status ? 'ni-check-circle':'ni-cross-circle' }}"></em> <strong>{{ status ? 'Success.':'Error!' }}</strong> {{message}}
+                 </div>
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-head">
+                            
+                        </div>
+                        <form [formGroup]="areaform" (ngSubmit)="is_edit ? update_area() : create_area()">
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name-1">Area Name</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" formControlName="area" placeholder="Enter area name">
+                                        </div>
+                                        <span class="error" *ngIf="area && area.invalid && area.touched">Enter area name</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="email-address-1">Status</label>
+                                        <div class="form-control-wrap">
+                                            <div class="form-control-select">
+                                                <select class="form-control" formControlName="is_status" >
+                                                    <option value="" selected disabled> Select status</option>
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <span class="error" *ngIf="is_status && is_status.invalid && is_status.touched">Select Role</span>
+
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12" *ngIf="!is_edit;else updatebtn">
+                                    <div class="form-group float-right">
+                                        <a routerLink="/area/listarea" class="btn btn-sm btn-light mr-2">Cancel</a>
+
+                                        <button type="submit" [disabled]="!areaform.valid" class="btn btn-sm btn-primary">Create area</button>
+                                    </div>
+                                </div>
+                                <ng-template #updatebtn>
+                                    <div class="col-12" >
+                                        <div class="form-group float-right">
+                                            <a routerLink="/area/listarea" class="btn btn-sm btn-light mr-2">Cancel</a>
+                                            <button type="submit" [disabled]="!areaform.valid" class="btn btn-sm btn-success">Update area</button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- .nk-block -->
+           
+        </div><!-- .components-preview -->
+
+
+
+
+
+
+        <!-- ----------------------------------- -->
+    </div>
+</div>

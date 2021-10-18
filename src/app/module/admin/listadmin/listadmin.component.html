@@ -1,0 +1,166 @@
+
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Admin List</h3>
+                    <div class="nk-block-des text-soft">
+                        <p>You have total {{count}} admins.</p>
+                    </div>
+                </div>
+                <div class="nk-block-head-content">
+                    <div class="toggle-wrap nk-block-tools-toggle">
+                        <a  class="btn btn-icon btn-trigger toggle-expand mr-n1" (click)="showmobile()" ><em class="icon ni ni-menu-alt-r"></em></a>
+                        <div class="toggle-expand-content"  [style.display]="mobileexport">
+                            <ul class="nk-block-tools g-3">
+                                <li><a class="btn btn-primary text-light" routerLink="/admin/addadmin"><span> + Add</span></a></li>
+
+                                <li><a href="javascript:void(0);" class="btn btn-white btn-outline-light"><em class="icon ni ni-download-cloud"></em><span>Export</span></a></li>
+                                <li class="nk-block-tools-opt">
+                                    <div class="drodown">
+                                        <a href="javascript:void(0);" class="dropdown-toggle btn btn-icon btn-primary" (click)="get_admin()" ><em class="icon ni ni-reload"></em></a>
+                                        
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!-- .toggle-wrap -->
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="message"  class="alert {{ status ? 'alert-success':'alert-danger' }} alert-icon alert-sm">
+            <em class="icon ni {{ status ? 'ni-check-circle':'ni-cross-circle' }}"></em> <strong>{{ status ? 'Success.':'Error!' }}</strong> {{message}}
+         </div>
+
+        <div class="nk-block">
+            
+            <div class="card card-bordered card-stretch">
+                
+                <div class="card-inner-group">
+                    <div class="card-inner position-relative card-tools-toggle">
+                       
+                            <div class="card-title-group">
+                                <div class="card-title">
+                                    <h6 class="title"><span class="mr-2">Admins</span> <a href="#" class="link d-none d-sm-inline">See History</a></h6>
+                                </div>
+                                <div class="card-tools">
+                                    <input type="text" class="form-control" [(ngModel)]="globalsearch" placeholder="Search">
+
+                                </div>
+                            </div>
+                       
+                    </div>
+                    <div class="card-inner p-0">
+                        <div class="nk-tb-list nk-tb-ulist is-compact">
+                            <div class="nk-tb-item nk-tb-head">
+                                <div class="nk-tb-col">
+                                    <span class="sub-text">#Id</span>
+                                </div>
+                                <div class="nk-tb-col"><span class="sub-text">User</span></div>
+                                <div class="nk-tb-col tb-col-md"><span class="sub-text">Username</span></div>
+                                <div class="nk-tb-col tb-col-md"><span class="sub-text">Phone</span></div>
+                                <div class="nk-tb-col tb-col-sm"><span class="sub-text">Email</span></div>
+                               
+                                <div class="nk-tb-col tb-col-lg"><span class="sub-text">Create Date</span></div>
+                                <div class="nk-tb-col tb-col-lg"><span class="sub-text">Update Date</span></div>
+                                <div class="nk-tb-col tb-col-lg"><span class="sub-text">Last Login</span></div>
+                                <div class="nk-tb-col"><span class="sub-text">Status</span></div>
+                                <div class="nk-tb-col nk-tb-col-tools text-right">
+                                    <span class="sub-text"></span>
+                                </div>
+                            </div><!-- .nk-tb-item -->
+                            <div class="nk-tb-item" *ngFor="let record of records | filter:globalsearch; let i=index">
+                                <div class="nk-tb-col ">
+                                    <span class="tb-lead">{{i+1}}</span>
+                                </div>
+                                <div class="nk-tb-col">
+                                    <div class="user-card">
+                                        <div class="user-avatar xs" [class]="i | color">
+                                            <span>{{record.first_name|titlecase|slice:0:1}}{{record.last_name|titlecase|slice:0:1}}</span>
+                                        </div>
+                                        <div class="user-name">
+                                            <span class="tb-lead">{{record.first_name|titlecase}} {{record.last_name|titlecase}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nk-tb-col tb-col-md">
+                                    <span>{{record.username}}</span>
+                                </div>
+                                <div class="nk-tb-col tb-col-md">
+                                    <span [ngClass]="record.mobile ? '' : 'tb-lead'">{{record.mobile ? record.mobile : 'No Mobile'}}</span>
+
+                                </div>
+                                <div class="nk-tb-col tb-col-sm">
+                                    <span [ngClass]="record.email ? '' : 'tb-lead'">{{record.email ? record.email : 'No Email'}}</span>
+                                </div>
+                                
+                                <div class="nk-tb-col tb-col-lg">
+                                    <span>{{record.create_date==null ? 'No Create' : record.create_date| slice:0:10}}</span>
+                                </div>
+                                <div class="nk-tb-col tb-col-lg">
+                                    <ul class="list-status">
+                                        <li> <span [ngClass]="record.update_date ? '' : 'tb-lead'">{{record.update_date==null ? 'No Update' : record.update_date| slice:0:10}}</span></li>
+                                    </ul>
+                                </div>
+                                <div class="nk-tb-col tb-col-lg">
+                                    <span>{{record.last_login==null ? 'No Login' : record.last_login}}</span>
+                                </div>
+                                <div class="nk-tb-col">
+                                    <span class="badge badge-dot badge-dot-xs badge-success" *ngIf="record.is_status=='active'">{{record.is_status|titlecase}}</span>
+                                    <span class="badge badge-dot badge-dot-xs badge-danger" *ngIf="record.is_status=='inactive'">{{record.is_status|titlecase}}</span>
+                                </div>
+                                <div class="nk-tb-col nk-tb-col-tools">
+                                    <ul class="nk-tb-actions gx-2">
+                                        
+                                        <li>
+                                            <div class="drodown">
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-icon btn-trigger dropdown-toggle" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-xs">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a href="javascript:;" routerLink="/admin/editadmin/{{record.id}}"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
+                                                        <li><a href="javascript:;" (click)="pass_ser_id(record.id)" data-toggle="modal" data-target="#modalSmall"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- .nk-tb-item -->
+                        </div><!-- .nk-tb-list -->
+                        <div class="p-4" *ngIf="records.length==0">
+                            <div class="text-center">
+                                <span ><a href="#">{{recordnotfound}}</a></span>
+                            </div>
+                        </div>
+                    </div><!-- .card-inner -->
+                   
+                </div><!-- .card-inner-group -->
+            </div><!-- .card -->
+        </div>
+    </div>
+</div>
+
+<!-- delete model -->
+<div class="modal fade show" tabindex="-1"  id="modalSmall" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+        
+            <div class="modal-body text-center">
+                <div>
+                    <em class="nk-modal-icon  icon-circle-xxl ni ni-alert-circle text-danger" style="font-size: 80px;"></em>
+                    <h4 class="nk-modal-title">Are you sure?</h4>
+                    <p class="lead" style="font-size: 15px;">Are you sure you want to delete this record ?</p>
+
+                    <div class="nk-modal-action mt-3">
+                        <a href="javascript:void(0)" class="btn btn-round btn-sm btn-light mr-1" data-dismiss="modal" #closeBtn>Cancel</a>
+                        <a href="javascript:void(0)" class="btn btn-round btn-sm btn-danger ml-1" (click)="delete_admin()">Yes, Delete it</a>
+                    </div>
+                  
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>

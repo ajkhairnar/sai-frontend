@@ -1,0 +1,310 @@
+<div class="nk-content-inner">
+  <div class="nk-content-body">
+      <div class="nk-block-head nk-block-head-sm">
+          <div class="nk-block-between">
+              <div class="nk-block-head-content">
+                  <h3 class="nk-block-title page-title"> {{ is_edit ? 'Edit' : 'Add' }} User</h3>
+                 
+              </div><!-- .nk-block-head-content -->
+              <div class="nk-block-head-content">
+                  <div class="toggle-wrap nk-block-tools-toggle">
+                      <a href="javascript:void(0);" class="btn btn-icon btn-trigger toggle-expand mr-n1" (click)="showmobile()"><em class="icon ni ni-menu-alt-r"></em></a>
+                      <div class="toggle-expand-content" [style.display]="mobileexport">
+                          <ul class="nk-block-tools g-3">
+                              <li><a routerLink="/user/listuser" class="btn btn-white btn-outline-light"><span>User List</span></a></li>
+                              
+                          </ul>
+                      </div>
+                  </div><!-- .toggle-wrap -->
+              </div><!-- .nk-block-head-content -->
+          </div><!-- .nk-block-between -->
+      </div><!-- .nk-block-head -->
+
+      <!-- ----------------------- -->
+      
+      <div class="components-preview wide-md mx-auto">
+          
+        
+          <div class="nk-block nk-block-lg">
+              <!-- Message -->
+              <div *ngIf="message"  class="alert {{ status ? 'alert-success':'alert-danger' }} alert-icon alert-sm">
+                  <em class="icon ni {{ status ? 'ni-check-circle':'ni-cross-circle' }}"></em> <strong>{{ status ? 'Success.':'Error!' }}</strong> {{message}}
+               </div>
+              <div class="card card-bordered">
+                  <div class="card-inner">
+                      <div class="card-head">
+                          
+                      </div>
+                      <form [formGroup]="userform" (ngSubmit)="is_edit ? update_user() : create_user()">
+                          <div class="row g-4">
+                              <div class="col-lg-4">
+                                  <div class="form-group">
+                                      <label class="form-label" for="full-name-1">First Name</label>
+                                      <div class="form-control-wrap">
+                                          <input type="text" class="form-control"  formControlName="first_name" placeholder="Enter first name"  >
+                                      </div>
+                                      
+                                      <div *ngIf="first_name && first_name.invalid && first_name.touched">
+                                        <span class="error" *ngIf="first_name && first_name.errors?.required">First name is required.</span>
+                                        <span class="error" *ngIf="first_name && first_name.errors?.pattern">Enter valid first name</span>
+                                      </div>
+
+                                  </div>
+                              </div>
+                              <div class="col-lg-4">
+                                  <div class="form-group">
+                                      <label class="form-label" for="full-name-1">Middle Name</label>
+                                      <div class="form-control-wrap">
+                                          <input type="text" class="form-control" formControlName="middle_name"  placeholder="Enter middle name">
+                                      </div>
+                                      <div *ngIf="middle_name && middle_name.invalid && middle_name.touched">
+                                        <span class="error" *ngIf="middle_name && middle_name.errors?.required">Middle name is required.</span>
+                                        <span class="error" *ngIf="middle_name && middle_name.errors?.pattern">Enter valid middle name</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-4">
+                                  <div class="form-group">
+                                      <label class="form-label" for="full-name-1">Last Name</label>
+                                      <div class="form-control-wrap">
+                                          <input type="text" class="form-control" formControlName="last_name" placeholder="Enter last name">
+                                      </div>
+                                      <div *ngIf="last_name && last_name.invalid && last_name.touched">
+                                        <span class="error" *ngIf="last_name && last_name.errors?.required">Last name is required.</span>
+                                        <span class="error" *ngIf="last_name && last_name.errors?.pattern">Enter valid middle name</span>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="col-lg-4">
+                                  <div class="form-group">
+                                      <label class="form-label" for="full-name-1"> Mobile</label>
+                                      <div class="form-control-wrap">
+                                          <input type="text" class="form-control" formControlName="mobile" placeholder="Enter mobile number">
+                                      </div>
+                                    
+
+                                      <div *ngIf="mobile && mobile.invalid && mobile.touched">
+                                        <span class="error" *ngIf="mobile && mobile.errors?.required">Mobile is required.</span>
+                                        <span class="error" *ngIf="mobile && mobile.errors?.pattern">Ente 10 Mobile Number</span>
+                                    </div>
+
+                                  </div>
+                              </div>
+                              <div class="col-lg-4">
+                                  <div class="form-group">
+                                      <label class="form-label" for="full-name-1">Email Address</label>
+                                      <div class="form-control-wrap">
+                                          <input type="text" class="form-control" formControlName="email" placeholder="Enter email address ">
+                                      </div>
+                                      <div class="div" *ngIf="email && email.invalid && email.touched">
+                                        <span class="error" *ngIf="email.errors?.email">Enter valid email address </span>
+                                    </div>
+
+                                  </div>
+                              </div>
+
+                              <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="default-04">Service</label>
+                                    <div class="form-control-wrap">
+                                        <div class="form-control-select">
+                                            <select class="form-control" formControlName="service" >
+                                                <option value="" selected disabled> Select service</option>
+                                                <option *ngFor="let s of services" value = "{{s.service}}">{{s.service|titlecase}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <span class="error" *ngIf="service && service.invalid && service.touched">Select service</span>
+                                </div>
+                              </div>
+                              
+                              
+
+
+                              <!-- -------------------------------- -->
+
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="default-03">Area</label>
+                                    <div class="form-control-wrap">
+                                        <div class="form-control-select">
+                                            <select class="form-control" formControlName="area" >
+                                                <option value="" selected disabled> Select Area</option>
+                                                <option *ngFor="let a of areas" value = "{{a.area}}">{{a.area|titlecase}}</option>
+                                            </select>
+                                        </div>
+                                        <span class="error" *ngIf="area && area.invalid && area.touched">Select area</span>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label class="form-label" for="default-textarea">Address</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" formControlName="address" placeholder="Enter Address">
+                                    </div>
+                                    <span class="error" *ngIf="address && address.invalid && address.touched">Select area</span>
+                                        
+
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="default-03">Cow Milk (In Ml)</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" (ngModelChange)="mltoltr('cow')"  formControlName="cow_milk"  placeholder="Enter cow milk (in ML)" maxlength="5" >
+
+                                    </div>
+                                    <div class="error" *ngIf="cow_milk && cow_milk.invalid && cow_milk.touched">
+                                        <span *ngIf="cow_milk.errors?.required">Cow milk is required</span>
+                                        <span *ngIf="cow_milk.errors?.pattern">Enter only digi</span>
+                                        <span *ngIf="cow_milk.errors?.minlength">Maximum length is 5</span>
+                                      </div>
+                                </div>
+                               
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="default-textarea">Cow Milk (In Ltr)</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" value="{{cow_milk_ltr}}"  placeholder="Cow Milk (in Ltr)" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                              
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="default-03">Buffelo Milk (In Ml)</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" (ngModelChange)="mltoltr('buffelo')" formControlName="buffelo_milk"  placeholder="Enter buffelo milk (in ML)"  maxlength="5" >
+
+                                    </div>
+                                    <div class="error" *ngIf="buffelo_milk && buffelo_milk.invalid && buffelo_milk.touched">
+                                        <span *ngIf="buffelo_milk.errors?.required">Buffelo milk is required</span>
+                                        <span *ngIf="buffelo_milk.errors?.pattern">Enter only digi</span>
+                                        <span *ngIf="buffelo_milk.errors?.minlength">Maximum length is 5</span>
+                                      </div>
+                                </div>
+                               
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="default-textarea">Buffelo Milk (In Ltr)</label>
+                                    <div class="form-control-wrap">
+                                        <input type="text" class="form-control" value="{{buffelo_milk_ltr}}"  placeholder="Buffelo Milk (in Ltr)" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                            
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-label" >Start Delivery</label>
+                                    <div class="form-control-wrap">
+                                        <input type="date" class="form-control" formControlName="start_delivery">
+                                    </div>
+                                    <div *ngIf="start_delivery && start_delivery.invalid && start_delivery.touched">
+                                        <span class="error" *ngIf="start_delivery && start_delivery.errors?.required"> Start delivery date is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="email-address-1">Status</label>
+                                    <div class="form-control-wrap">
+                                        <div class="form-control-select">
+                                            <select class="form-control" formControlName="is_status" >
+                                                <option value="" selected disabled> Select status</option>
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <span class="error" *ngIf="is_status && is_status.invalid && is_status.touched">Select Role</span>
+  
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                              <div class="form-group">
+                                  <label class="form-label" >Username</label>
+                                  <div class="form-control-wrap">
+                                    <div class="form-icon form-icon-right" (click)="regenerate_username()" *ngIf="!is_edit">
+                                      <em class="icon ni ni-reload"></em>
+                                    </div>
+                                      <input type="text" class="form-control" formControlName="username"  placeholder="Enter username">
+                                  </div>
+                                  <div *ngIf="username && username.invalid && username.touched">
+                                      <span class="error" *ngIf="username && username.errors?.required">Username is required.</span>
+                                      <span class="error" *ngIf="username && username.errors?.minlength">Minimum length 5 required</span>
+                                  </div>
+                              </div>
+                          </div>
+
+
+                            <div class="col-lg-4">
+                              <div class="form-group">
+                                  <label class="form-label" for="full-name-1">Password</label>
+                                  <div class="form-control-wrap">
+                                    <a tabindex="-1" href="javascript:;" class="form-icon form-icon-right passcode-switch is-hidden" (click)="password_toggle()">
+                                        <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                        <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                    </a>
+                                      <input [type]="is_password_show ? 'text' : 'password'" class="form-control" formControlName="password" placeholder="Enter password">
+                                  </div>
+                                  <div *ngIf="password && password.invalid && password.touched">
+                                      <span class="error" *ngIf="password && password.errors?.required">Password is required.</span>
+                                      <span class="error" *ngIf="password && password.errors?.minlength">Minimum length 5 required</span>
+                                  </div>
+                              </div>
+                          </div>
+                        
+                          
+
+                          
+
+                              <!-- -------------------------------------- -->
+                             
+
+                             
+                              <div class="col-12" *ngIf="!is_edit; else updatebtn">
+                                  <div class="form-group float-right" *ngIf="!is_view">
+                                      <a routerLink="/user/listuser" class="btn btn-sm btn-light mr-2">Cancel</a>
+                                      <button type="submit" [disabled]="!userform.valid" class="btn btn-sm btn-primary">Create User</button>
+                                  </div>
+                              </div>
+                              <ng-template #updatebtn>
+                                  <div class="col-12" >
+                                      <div class="form-group float-right " *ngIf="!is_view">
+                                          <a routerLink="/user/listuser" class="btn btn-sm btn-light mr-2">Cancel</a>
+                                          <button type="submit" [disabled]="!userform.valid" class="btn btn-sm btn-success">Update User</button>
+                                      </div>
+                                  </div>
+                              </ng-template>
+
+                           
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div><!-- .nk-block -->
+         
+      </div><!-- .components-preview -->
+
+
+
+
+
+
+      <!-- ----------------------------------- -->
+  </div>
+</div>
